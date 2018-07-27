@@ -15,6 +15,7 @@ class NewPost extends Component {
             author:this.state.author
         }).then(response =>{
             alert("Post Saved..")
+            confirm("dkashdas")
             this.setState({
                 title: '',
                 content: '',
