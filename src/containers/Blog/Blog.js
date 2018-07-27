@@ -7,13 +7,20 @@ import './Blog.css';
 
 class Blog extends Component {
     state={
-        posts: []
+        posts: [],
+        selected_post_id :null
     }
     componentDidMount(){
         Axios.get('https://jsonplaceholder.typicode.com/posts')
         .then(response => {
+            const posts_data = response.data.slice(0,4)
+            const updated_data = posts_data.map(post => {
+                return {...post,
+                        author : "Ashwini"
+                        }
+                })
             this.setState(
-                { posts:response.data }
+                { posts:updated_data }
                 )
             console.log("success ", {response})
         })
@@ -21,9 +28,16 @@ class Blog extends Component {
             console.log("Fail")
         })
     }
+
+    post_select_handler = (id) => {
+        ///alert(id)
+        this.setState({selected_post_id : id })
+
+    }
+
     render () {
       const  posts = this.state.posts.map(post =>{
-            return <Post title={post.title} auther="Ashwini" key={post.id} id={post.id}/>
+            return <Post title={post.title} auther={post.author} key={post.id} id={post.id} clicked = {()=>this.post_select_handler(post.id)}/>
         })
         return (
             <div>
@@ -32,7 +46,7 @@ class Blog extends Component {
                     {posts}
                 </section>
                 <section>
-                    <FullPost />
+                    <FullPost  post_id= {this.state.selected_post_id}/>
                 </section>
                 <section>
                     <NewPost />
