@@ -2,12 +2,15 @@ import React, {Component} from 'react'
 import Axios from '../../../axios'
 import Post from '../../../components/Post/Post'
 import './Posts.css'
+import {Link} from 'react-router-dom'
+import Spinner from '../../../components/Spinner/Spinner'
 class Posts extends Component{
     state={
         posts: [],
         selected_post_id :null
     }
     componentDidMount(){
+        console.log("History",this.props)
         Axios.get('https://jsonplaceholder.typicode.com/posts')
         .then(response => {
             const posts_data = response.data.slice(0,4)
@@ -28,14 +31,24 @@ class Posts extends Component{
 
     post_select_handler = (id) => {
         ///alert(id)
-        this.setState({selected_post_id : id })
+       // this.setState({selected_post_id : id })
+       <Spinner />
+       setTimeout(() => {this.props.history.push('/post/' + id)},1000)
 
     }
 
    render(){
     const  posts = this.state.posts.map(post =>{
-        return <Post title={post.title} auther={post.author} key={post.id} id={post.id} clicked = {()=>this.post_select_handler(post.id)}/>
-    })
+                    return(
+                        //<Link to={'/post/' + post.id } key={post.id}>
+                     <Post title={post.title} 
+                           auther={post.author} 
+                           id={post.id} 
+                           key={post.id}
+                           clicked = {()=>this.post_select_handler(post.id)}/>
+                    // </Link>
+                    )
+                  })
     return(
 
             //<h3 style={{textAlign:"center", fontSize: "30px"}}>Post</h3>

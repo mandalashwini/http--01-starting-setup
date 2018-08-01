@@ -3,7 +3,8 @@ import Axios from 'axios'
 import Posts from '../Blog/Posts/Posts'
 import NewPost from '../Blog/NewPost/NewPost'
 import './Blog.css';
-import { Route,Link } from 'react-router-dom'
+import { Route,NavLink , Switch} from 'react-router-dom'
+import FullPost from '../Blog/FullPost/FullPost'
 class Blog extends Component {
    
     render () {
@@ -13,18 +14,25 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to={ {
+                            <li><NavLink to="/" exact
+                                activeClassName = 'My-active'
+                                activeStyle = { {
+                                    color : "#fa923f",
+                                    textDecoration : "underline"
+                                }}>Home</NavLink></li>
+                            <li><NavLink to={ {
                                 pathname: '/new-post',
                                 hash: '#submit',
                                 search: '?quick-submit=true'
-                            }}>New Post</Link></li>
+                            }}>New Post</NavLink></li>
                             </ul>
                         </nav>
                     </header>
-                   <Route path='/' exact component={Posts} />
-                   <Route path='/new-post' exact component={NewPost} />
-               
+                    <Switch>
+                        <Route path='/' exact component={Posts} />
+                        <Route path='/new-post' exact component={NewPost} />
+                        <Route path='/post/:id' exact component={FullPost} />
+                    </Switch>
             </div>
         );
     }

@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import './FullPost.css';
-
+import Spinner from '../../../components/Spinner/Spinner'
 class FullPost extends Component {
    
     state = {
-        loadedPost : null
+        loadedPost : null,
+        loader_time : null
     }
-    componentDidUpdate () {
-        if(this.props.post_id){
-            if( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.post_id) )
+
+    componentDidMount () {
+        console.log(this.props.match.params.id)
+        if(this.props.match.params.id){
+            if( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id) )
             {
-                    Axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.post_id)
+                    Axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
                     .then(response =>{
                     //const  post_data = response
                         console.log("data-->",response)
@@ -39,9 +42,10 @@ class FullPost extends Component {
 
     
     render () {
-        let post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
+        let post = null
+    
         if (this.props.post_id){
-          post = <p style={{textAlign: 'center'}}>Loading...........</p>;
+            console.log("Loading------->",this.props.post_id)
         };
         console.log("------->",this.props.post_id)
         if (this.state.loadedPost){
@@ -55,8 +59,14 @@ class FullPost extends Component {
             </div>
 
         );
+
     }
-        return post;
+        return (
+            <div>
+               
+               {post ? post : <Spinner />}
+            </div>
+        );
     }
 }
 
