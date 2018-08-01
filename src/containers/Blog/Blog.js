@@ -29,9 +29,10 @@ class Blog extends Component {
                         </nav>
                     </header>
                     <Switch>
-                        <Route path='/' exact component={Posts} />
+                       
                         <Route path='/new-post' exact component={NewPost} />
-                        <Route path='/post/:id' exact component={FullPost} />
+                        <Route path='/'  component={Posts} />
+                      
                     </Switch>
             </div>
         );

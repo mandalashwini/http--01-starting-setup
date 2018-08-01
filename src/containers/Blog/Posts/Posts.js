@@ -4,6 +4,8 @@ import Post from '../../../components/Post/Post'
 import './Posts.css'
 import {Link} from 'react-router-dom'
 import Spinner from '../../../components/Spinner/Spinner'
+import {Route} from 'react-router-dom'
+import FullPost from '../FullPost/FullPost'
 class Posts extends Component{
     state={
         posts: [],
@@ -32,8 +34,8 @@ class Posts extends Component{
     post_select_handler = (id) => {
         ///alert(id)
        // this.setState({selected_post_id : id })
-       <Spinner />
-       setTimeout(() => {this.props.history.push('/post/' + id)},1000)
+       
+       this.props.history.push('/' + id)
 
     }
 
@@ -52,9 +54,12 @@ class Posts extends Component{
     return(
 
             //<h3 style={{textAlign:"center", fontSize: "30px"}}>Post</h3>
+            <div>
             <section className="Posts">
                 {posts}
             </section>
+               <Route path='/:id' exact component={FullPost} />
+            </div>
          )
    }
 

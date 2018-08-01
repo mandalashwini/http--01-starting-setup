@@ -10,23 +10,22 @@ class FullPost extends Component {
     }
 
     componentDidMount () {
+        debugger
         console.log(this.props.match.params.id)
-        if(this.props.match.params.id){
-            if( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id) )
-            {
-                    Axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
-                    .then(response =>{
-                    //const  post_data = response
-                        console.log("data-->",response)
-                        this.setState({loadedPost :response.data})
-                    })
+            if ( this.props.match.params.id ) {
+                console.log("111")
+                if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id) ) {
+                    Axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id )
+                        .then( response => {
+                            // console.log(response);
+                            this.setState( { loadedPost: response.data } );
+                        } );
+                }
             }
-                
-                
-        }
+        
     }
     deletePostHandler = () => {
-        Axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.post_id)
+        Axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
         .then(response =>{
         //const  post_data = response
             console.log("data-->",response)
@@ -45,9 +44,9 @@ class FullPost extends Component {
         let post = null
     
         if (this.props.post_id){
-            console.log("Loading------->",this.props.post_id)
+            console.log("Loading------->",this.props.match.params.id)
         };
-        console.log("------->",this.props.post_id)
+        console.log("------->",this.props.match.params.id)
         if (this.state.loadedPost){
         post = (
             <div className="FullPost">
@@ -63,7 +62,6 @@ class FullPost extends Component {
     }
         return (
             <div>
-               
                {post ? post : <Spinner />}
             </div>
         );
