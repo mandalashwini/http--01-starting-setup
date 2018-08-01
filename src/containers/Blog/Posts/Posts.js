@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import Axios from '../../../axios'
-class Post extends Component{
+import Post from '../../../components/Post/Post'
+import './Posts.css'
+class Posts extends Component{
     state={
         posts: [],
         selected_post_id :null
@@ -46,4 +48,4 @@ class Post extends Component{
 
 }
 
-export default Post
+export default Posts
