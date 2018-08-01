@@ -10,19 +10,24 @@ class FullPost extends Component {
     }
 
     componentDidMount () {
-        debugger
-        console.log(this.props.match.params.id)
-            if ( this.props.match.params.id ) {
-                console.log("111")
-                if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id) ) {
-                    Axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id )
-                        .then( response => {
-                            // console.log(response);
-                            this.setState( { loadedPost: response.data } );
-                        } );
-                }
+        console.log("jhfds",this.props);
+        this.loadData();
+    }
+
+    componentDidUpdate() {
+        this.loadData();
+    }
+
+    loadData () {
+        if ( this.props.match.params.id ) {
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id) ) {
+                Axios.get( 'https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id )
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
             }
-        
+        }
     }
     deletePostHandler = () => {
         Axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
@@ -43,10 +48,11 @@ class FullPost extends Component {
     render () {
         let post = null
     
-        if (this.props.post_id){
+        if (this.props.match.params.id){
             console.log("Loading------->",this.props.match.params.id)
         };
-        console.log("------->",this.props.match.params.id)
+        post = <Spinner />
+
         if (this.state.loadedPost){
         post = (
             <div className="FullPost">
@@ -58,11 +64,12 @@ class FullPost extends Component {
             </div>
 
         );
-
+        
     }
+   
         return (
             <div>
-               {post ? post : <Spinner />}
+               {post}
             </div>
         );
     }

@@ -35,7 +35,7 @@ class Posts extends Component{
         ///alert(id)
        // this.setState({selected_post_id : id })
        
-       this.props.history.push('/' + id)
+       this.props.history.push('/post/' + id)
 
     }
 
@@ -58,7 +58,7 @@ class Posts extends Component{
             <section className="Posts">
                 {posts}
             </section>
-               <Route path='/:id' exact component={FullPost} />
+               <Route path='/post/:id' exact component={FullPost} />
             </div>
          )
    }
